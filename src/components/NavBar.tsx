@@ -11,6 +11,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const LINKS = [
   { text: "Home", href: "/" },
@@ -91,8 +93,10 @@ export default function NavBar() {
             {LINKS.map((link) => (
               <Button
                 key={link.text}
+                href={link.href}
+                LinkComponent={Link}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{ my: 2, display: "block" }}
               >
                 {link.text}
               </Button>

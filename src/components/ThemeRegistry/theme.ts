@@ -7,6 +7,7 @@ const playpen = Playpen_Sans({
   display: "swap",
 });
 
+const colorPrimary = "#b22f2f";
 const colorSecondary = "#b2712f";
 
 const theme = createTheme({
@@ -15,7 +16,7 @@ const theme = createTheme({
       default: "#ebdcba",
     },
     primary: {
-      main: "#b22f2f",
+      main: colorPrimary,
     },
     secondary: {
       main: colorSecondary,
@@ -25,6 +26,18 @@ const theme = createTheme({
     fontFamily: playpen.style.fontFamily,
     h3: {
       color: colorSecondary,
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: "white",
+          "&:hover": {
+            color: "black",
+          },
+        },
+      },
     },
   },
 });
