@@ -7,20 +7,26 @@ import SearchBar from "@/components/SearchBar";
 import React, { useState } from "react";
 import fetchedData from "../../data";
 import Container from "@mui/material/Container";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 interface Books {
   title: string;
   author: string;
   pages: number;
   year: number;
+  availability: number;
 }
 
-const data: Books[] = fetchedData.map(({ title, author, pages, year }) => ({
-  title,
-  author,
-  pages,
-  year,
-}));
+const data: Books[] = fetchedData.map(
+  ({ title, author, pages, year, availability }) => ({
+    title,
+    author,
+    pages,
+    year,
+    availability,
+  })
+);
 
 export default function Page() {
   const [filteredBooks, setFilteredBooks] = useState(data);
@@ -35,6 +41,14 @@ export default function Page() {
     setFilteredBooks(filtered);
   };
 
+  const checkAvailability = (availability: number) => {
+    if (availability > 0) {
+      return <CheckCircleOutlineIcon style={{ fill: "green", fontSize: 16 }} />;
+    } else {
+      return <CancelIcon style={{ fill: "red", fontSize: 16 }} />;
+    }
+  };
+
   return (
     <div>
       <SearchBar handleFilter={handleFilter} />
@@ -42,7 +56,7 @@ export default function Page() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr 1fr",
+            gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
             paddingBottom: 20,
             fontSize: 20,
           }}
@@ -51,19 +65,23 @@ export default function Page() {
           <span>Autor:</span>
           <span>Počet stran:</span>
           <span>Roky vydání:</span>
+          <span>Dostupnost:</span>
         </div>
         {filteredBooks.map((book) => (
           <div
             key={book.title}
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr 1fr",
+              gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
             }}
           >
             <span>{book.title}</span>
             <span>{book.author}</span>
             <span>{book.pages}</span>
             <span>{book.year}</span>
+            <span>
+              {checkAvailability(book.availability)} {book.availability}x
+            </span>
           </div>
         ))}
       </Container>
