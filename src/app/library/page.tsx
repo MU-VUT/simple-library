@@ -5,19 +5,32 @@
 
 import SearchBar from "@/components/SearchBar";
 import React, { useState } from "react";
-import data from "../../data";
+import fetchedData from "../../data";
 import Container from "@mui/material/Container";
+
+interface Books {
+  title: string;
+  author: string;
+  pages: number;
+  year: number;
+}
+
+const data: Books[] = fetchedData.map(({ title, author, pages, year }) => ({
+  title,
+  author,
+  pages,
+  year,
+}));
 
 export default function Page() {
   const [filteredBooks, setFilteredBooks] = useState(data);
 
   const handleFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    const filtered = data.filter(
-      ({ title, author, year }) =>
-        title.toLowerCase().includes(value) ||
-        author.toLowerCase().includes(value) ||
-        year.toString().includes(value)
+    const value = event.target.value.toLowerCase();
+    const filtered = data.filter(({ title, author, year }) =>
+      (title.toLowerCase() + author.toLowerCase() + year.toString()).includes(
+        value
+      )
     );
     setFilteredBooks(filtered);
   };

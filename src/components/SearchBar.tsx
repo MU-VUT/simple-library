@@ -11,7 +11,7 @@ const SearchBar = ({ handleFilter }: any) => (
       onChange={handleFilter}
       label="Hledat..."
       variant="outlined"
-      placeholder="Název knihy, autora, vydání"
+      placeholder="Název knihy, autora, rok vydání"
       fullWidth
       focused
       InputProps={{
