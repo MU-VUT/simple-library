@@ -1,28 +1,48 @@
+"use client";
+
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import theme from "./ThemeRegistry/theme";
 import InputAdornment from "@mui/material/InputAdornment";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
-const SearchBar = ({ handleFilter }: any) => (
-  <form style={{ padding: 40, textAlign: "center" }}>
-    <TextField
-      id="search-bar"
-      className="text"
-      onChange={handleFilter}
-      label="Hledat..."
-      variant="outlined"
-      placeholder="Název knihy, autora, rok vydání"
-      fullWidth
-      focused
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon style={{ fill: theme.palette.primary.main }} />
-          </InputAdornment>
-        ),
-      }}
-    />
-  </form>
-);
+export default function SearchBar() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
 
-export default SearchBar;
+  const handleFilter = (term: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set("query", term);
+    } else {
+      params.delete("query");
+    }
+    replace(`${pathname}?${params.toString()}`);
+  };
+
+  return (
+    <form style={{ padding: 40, textAlign: "center" }}>
+      <TextField
+        id="search-bar"
+        className="text"
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          handleFilter(e.target.value);
+        }}
+        label="Hledat..."
+        variant="outlined"
+        placeholder="Název knihy, autora, rok vydání"
+        fullWidth
+        focused
+        defaultValue={searchParams.get("query")?.toString()}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon style={{ fill: theme.palette.primary.main }} />
+            </InputAdornment>
+          ),
+        }}
+      />
+    </form>
+  );
+}
