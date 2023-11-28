@@ -3,6 +3,10 @@
 import fetchedData from "../data";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
+import fetchPages from "@/app/library/fetchPages";
+import Pagination from "@mui/material/Pagination";
+import { useState } from "react";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 interface Books {
   title: string;
@@ -23,6 +27,16 @@ const data: Books[] = fetchedData.map(
 );
 
 export default function SearchBooks({ query }: any) {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const handlePaginationChange = (e: any, pageNumber: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", pageNumber.toString());
+    replace(`${pathname}?${params.toString()}`);
+  };
+
   const checkAvailability = (availability: number) => {
     if (availability > 0) {
       return <CheckCircleOutlineIcon style={{ fill: "green", fontSize: 16 }} />;
@@ -56,21 +70,36 @@ export default function SearchBooks({ query }: any) {
     );
   });
 
-  return filteredBooks.map((book) => (
-    <div
-      key={book.title}
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
-      }}
-    >
-      <span>{book.title}</span>
-      <span>{book.author}</span>
-      <span>{book.pages}</span>
-      <span>{book.year}</span>
-      <span>
-        {checkAvailability(book.availability)} {book.availability}x
-      </span>
-    </div>
-  ));
+  return (
+    <>
+      <div>
+        {filteredBooks.map((book) => (
+          <div
+            key={book.title}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
+            }}
+          >
+            <span>{book.title}</span>
+            <span>{book.author}</span>
+            <span>{book.pages}</span>
+            <span>{book.year}</span>
+            <span>
+              {checkAvailability(book.availability)} {book.availability}x
+            </span>
+          </div>
+        ))}
+      </div>
+      <Pagination
+        count={fetchPages(filteredBooks)}
+        page={searchParams.get("page") ? Number(searchParams.get("page")) : 1}
+        onChange={handlePaginationChange}
+        defaultPage={1}
+        variant="outlined"
+        shape="rounded"
+        style={{ justifyContent: "center", display: "flex", padding: 40 }}
+      />
+    </>
+  );
 }
