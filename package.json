@@ -17,7 +17,8 @@
     "graphql": "^16.8.1",
     "next": "14.0.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "use-debounce": "^3.4.3"
   },
   "devDependencies": {
     "@types/node": "^20",

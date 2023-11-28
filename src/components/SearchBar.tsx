@@ -5,6 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import theme from "./ThemeRegistry/theme";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 
 export default function SearchBar() {
   const searchParams = useSearchParams();
@@ -21,13 +22,15 @@ export default function SearchBar() {
     replace(`${pathname}?${params.toString()}`);
   };
 
+  const [debouncedFilter] = useDebouncedCallback(handleFilter, 300);
+
   return (
     <form style={{ padding: 40, textAlign: "center" }}>
       <TextField
         id="search-bar"
         className="text"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          handleFilter(e.target.value);
+          debouncedFilter(e.target.value);
         }}
         label="Hledat..."
         variant="outlined"
