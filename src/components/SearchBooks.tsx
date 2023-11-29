@@ -5,7 +5,6 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 import fetchPages from "@/app/library/fetchPages";
 import Pagination from "@mui/material/Pagination";
-import { useState } from "react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 interface Books {
@@ -70,10 +69,23 @@ export default function SearchBooks({ query }: any) {
     );
   });
 
+  const setPagedBooks = (filteredBooks: Books[]) => {
+    var size = 10;
+    var arrayOfArrays = [];
+    for (var i = 0; i < filteredBooks.length; i += size) {
+      arrayOfArrays.push(filteredBooks.slice(i, i + size));
+    }
+    return arrayOfArrays;
+  };
+
+  const pagedBooks = setPagedBooks(filteredBooks);
+
   return (
     <>
       <div>
-        {filteredBooks.map((book) => (
+        {pagedBooks[
+          searchParams.get("page") ? Number(searchParams.get("page")) - 1 : 0
+        ].map((book) => (
           <div
             key={book.title}
             style={{
