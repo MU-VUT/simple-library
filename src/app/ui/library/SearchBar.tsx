@@ -2,7 +2,7 @@
 
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
-import theme from "./ThemeRegistry/theme";
+import theme from "../../../components/ThemeRegistry/theme";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";

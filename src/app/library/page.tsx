@@ -1,13 +1,14 @@
-// Search bar
-// List - Název knihy, Autor, Rok vydání, Dostupnost
-// Pagination (max. XX na stránku)
-
-import SearchBar from "@/components/SearchBar";
+import SearchBar from "@/app/ui/library/SearchBar";
 import React, { Suspense, useState } from "react";
 import Container from "@mui/material/Container";
-import SearchBooks from "@/components/SearchBooks";
+import CustomPagination from "../ui/library/CustomPagination";
+import { fetchBooksPages, fetchTotalBooks } from "./utils";
+import BookList from "./BookList";
 
-export default function Page({
+// TODO: Dialog okno s detaily knihy (název, autor, obrázek, počet stran, rok vydání, jazyk, země, link, odkaz)
+// https://mui.com/material-ui/react-dialog/
+
+export default async function Page({
   searchParams,
 }: {
   searchParams?: {
@@ -17,12 +18,17 @@ export default function Page({
 }) {
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
+  const totalPages = await fetchBooksPages(query);
+  const totalBooks = await fetchTotalBooks(query);
 
   return (
     <div>
       <SearchBar />
       <Container>
-        <SearchBooks query={query} />
+        <Suspense>
+          <BookList query={query} currentPage={currentPage} />
+        </Suspense>
+        <CustomPagination totalPages={totalPages} totalBooks={totalBooks} />
       </Container>
     </div>
   );
