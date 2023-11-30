@@ -22,20 +22,6 @@ export default function Page({
     <div>
       <SearchBar />
       <Container>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
-            paddingBottom: 20,
-            fontSize: 20,
-          }}
-        >
-          <span>Název knihy:</span>
-          <span>Autor:</span>
-          <span>Počet stran:</span>
-          <span>Roky vydání:</span>
-          <span>Dostupnost:</span>
-        </div>
         <SearchBooks query={query} />
       </Container>
     </div>

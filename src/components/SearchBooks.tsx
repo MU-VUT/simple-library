@@ -1,11 +1,13 @@
 "use client";
 
 import fetchedData from "../data";
+import { styled } from "@mui/material/styles";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 import fetchPages from "@/app/library/fetchPages";
 import Pagination from "@mui/material/Pagination";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import Grid from "@mui/material/Grid";
 
 interface Books {
   title: string;
@@ -80,28 +82,49 @@ export default function SearchBooks({ query }: any) {
 
   const pagedBooks = setPagedBooks(filteredBooks);
 
+  // TODO: lepsi desing book listu -> kontajnery, barevnosti, detaily, animace
+
+  const StyledGrid = styled(Grid)(({ theme }) => ({
+    backgroundColor: "rgba(0, 0, 0, 0.03)",
+    padding: 10,
+    marginBottom: 10,
+    border: "1px solid rgba(0, 0, 0, 0.05)",
+    borderRadius: 10,
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.05)",
+      boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.2);",
+    },
+  }));
+
   return (
     <>
       <div>
         {pagedBooks[
           searchParams.get("page") ? Number(searchParams.get("page")) - 1 : 0
         ].map((book) => (
-          <div
-            key={book.title}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
-            }}
-          >
-            <span>{book.title}</span>
-            <span>{book.author}</span>
-            <span>{book.pages}</span>
-            <span>{book.year}</span>
-            <span>
+          <StyledGrid container key={book.title}>
+            <Grid xs={6} md={4}>
+              {book.title}
+            </Grid>
+            <Grid xs={6} md={4}>
+              {book.author}
+            </Grid>
+            <Grid xs={4} md={2}>
+              {book.pages}
+            </Grid>
+            <Grid xs={4} md={1}>
+              {book.year}
+            </Grid>
+            <Grid xs={4} md={1}>
               {checkAvailability(book.availability)} {book.availability}x
-            </span>
-          </div>
+            </Grid>
+          </StyledGrid>
         ))}
+      </div>
+      <div
+        style={{ justifyContent: "center", display: "flex", paddingTop: 20 }}
+      >
+        <span>Celkem {filteredBooks.length} nalezených knih</span>
       </div>
       <Pagination
         count={fetchPages(filteredBooks)}
@@ -110,7 +133,11 @@ export default function SearchBooks({ query }: any) {
         defaultPage={1}
         variant="outlined"
         shape="rounded"
-        style={{ justifyContent: "center", display: "flex", padding: 40 }}
+        style={{
+          justifyContent: "center",
+          display: "flex",
+          padding: "10px 0 30px 0",
+        }}
       />
     </>
   );
