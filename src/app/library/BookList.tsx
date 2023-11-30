@@ -1,6 +1,6 @@
 import { fetchFilteredBooks } from "./utils";
 import StyledGrid from "../ui/library/StyledGrid";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Unstable_Grid2";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Book } from "../lib/definitions";
@@ -24,7 +24,7 @@ export default async function BookList({
 
   return (
     <div>
-      {pagedBooks[currentPage - 1].map((book: any) => (
+      {pagedBooks[currentPage - 1]?.map((book: Book) => (
         <StyledGrid container key={book.title}>
           <Grid xs={6} md={4}>
             {book.title}

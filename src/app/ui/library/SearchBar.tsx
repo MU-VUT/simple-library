@@ -29,7 +29,6 @@ export default function SearchBar() {
     <form style={{ padding: 40, textAlign: "center" }}>
       <TextField
         id="search-bar"
-        className="text"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           debouncedFilter(e.target.value);
         }}

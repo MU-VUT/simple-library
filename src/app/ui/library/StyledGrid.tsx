@@ -1,7 +1,7 @@
 "use client";
 
 import { styled } from "@mui/material/styles";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Unstable_Grid2";
 
 const StyledGrid = styled(Grid)(({ theme }) => ({
   backgroundColor: "rgba(0, 0, 0, 0.03)",
