@@ -1,17 +1,10 @@
+import * as React from "react";
 import { fetchFilteredBooks } from "./utils";
-import StyledGrid from "../ui/library/StyledGrid";
-import Grid from "@mui/material/Unstable_Grid2";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import CancelIcon from "@mui/icons-material/Cancel";
-import { Book } from "../lib/definitions";
-
-const checkAvailability = (availability: number) => {
-  if (availability > 0) {
-    return <CheckCircleOutlineIcon style={{ fill: "green", fontSize: 16 }} />;
-  } else {
-    return <CancelIcon style={{ fill: "red", fontSize: 16 }} />;
-  }
-};
+import { BookType } from "../lib/definitions";
+import Book from "./Book";
+import CustomDialog from "./CustomDialog";
+// TODO: Dialog okno s detaily knihy (název, autor, obrázek se suspense(fetch z githubu), počet stran, rok vydání, jazyk, země, link, dostupnost)
+// https://mui.com/material-ui/react-dialog/
 
 export default async function BookList({
   query,
@@ -20,28 +13,12 @@ export default async function BookList({
   query: string;
   currentPage: number;
 }) {
-  const pagedBooks: Book[][] = await fetchFilteredBooks(query);
+  const pagedBooks: BookType[][] = await fetchFilteredBooks(query);
 
   return (
     <div>
-      {pagedBooks[currentPage - 1]?.map((book: Book) => (
-        <StyledGrid container key={book.title}>
-          <Grid xs={6} md={4}>
-            {book.title}
-          </Grid>
-          <Grid xs={6} md={4}>
-            {book.author}
-          </Grid>
-          <Grid xs={4} md={2}>
-            {book.pages}
-          </Grid>
-          <Grid xs={4} md={1}>
-            {book.year}
-          </Grid>
-          <Grid xs={4} md={1}>
-            {checkAvailability(book.availability)} {book.availability}x
-          </Grid>
-        </StyledGrid>
+      {pagedBooks[currentPage - 1]?.map((book: BookType) => (
+        <Book key={book.title} book={book} />
       ))}
     </div>
   );

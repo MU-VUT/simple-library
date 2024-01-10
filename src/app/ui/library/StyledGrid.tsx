@@ -12,6 +12,7 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
   "&:hover": {
     backgroundColor: "rgba(0, 0, 0, 0.05)",
     boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.2);",
+    cursor: "pointer",
   },
 }));
 

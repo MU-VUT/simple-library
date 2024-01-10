@@ -6,9 +6,6 @@ import { fetchBooksPages, fetchTotalBooks } from "./utils";
 import BookList from "./BookList";
 import { BookListSkeleton } from "../ui/skeletons";
 
-// TODO: Dialog okno s detaily knihy (název, autor, obrázek, počet stran, rok vydání, jazyk, země, link, odkaz)
-// https://mui.com/material-ui/react-dialog/
-
 export default async function Page({
   searchParams,
 }: {
