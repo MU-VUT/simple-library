@@ -1,5 +1,5 @@
 import * as React from "react";
-import { fetchFilteredBooks } from "./utils";
+import { fetchFilteredBooks, getBlurData } from "./utils";
 import { BookType } from "../lib/definitions";
 import Book from "./Book";
 import CustomDialog from "./CustomDialog";
@@ -14,11 +14,22 @@ export default async function BookList({
   currentPage: number;
 }) {
   const pagedBooks: BookType[][] = await fetchFilteredBooks(query);
+  var blurDataArr: string[] = await Promise.all(
+    pagedBooks[currentPage - 1]?.map(async (book: BookType) => {
+      const imageUrl =
+        "https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/" +
+        book.imageLink;
+      const { base64 } = await getBlurData(imageUrl);
+      return base64;
+    })
+  );
+
+  console.log(blurDataArr);
 
   return (
     <div>
-      {pagedBooks[currentPage - 1]?.map((book: BookType) => (
-        <Book key={book.title} book={book} />
+      {pagedBooks[currentPage - 1]?.map((book: BookType, index) => (
+        <Book key={book.title} book={book} blurData={blurDataArr[index]} />
       ))}
     </div>
   );

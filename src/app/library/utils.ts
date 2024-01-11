@@ -1,4 +1,5 @@
-import type { Book } from "../lib/definitions";
+import type { BookType } from "../lib/definitions";
+import { getPlaiceholder } from "plaiceholder";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -8,7 +9,7 @@ export async function fetchBooksPages(query: string) {
   try {
     const data = await fetchFilteredBooks(query);
     var count = 0;
-    data.forEach((element: Book[]): number => {
+    data.forEach((element: BookType[]): number => {
       count += element.length;
       return count;
     });
@@ -23,7 +24,7 @@ export async function fetchTotalBooks(query: string) {
   try {
     const data = await fetchFilteredBooks(query);
     var count = 0;
-    data.forEach((element: Book[]): number => {
+    data.forEach((element: BookType[]): number => {
       count += element.length;
       return count;
     });
@@ -34,7 +35,7 @@ export async function fetchTotalBooks(query: string) {
   }
 }
 
-export async function fetchFilteredBooks(query: string): Promise<Book[][]> {
+export async function fetchFilteredBooks(query: string): Promise<BookType[][]> {
   try {
     const res = await fetch(url, {
       cache: "no-store",
@@ -46,7 +47,7 @@ export async function fetchFilteredBooks(query: string): Promise<Book[][]> {
       .split(/(\s+)/)
       .filter((e: string) => e.trim().length > 0);
 
-    const filteredBooks = data.filter((book: Book) => {
+    const filteredBooks = data.filter((book: BookType) => {
       return (
         filterString(book.title.toLowerCase(), values) ||
         filterString(book.author.toLowerCase(), values) ||
@@ -76,3 +77,12 @@ const filterString = (data: string, values: string[]) => {
   }
   return result;
 };
+
+export async function getBlurData(src: string) {
+  const buffer = await fetch(src).then(async (res) =>
+    Buffer.from(await res.arrayBuffer())
+  );
+
+  const data = await getPlaiceholder(buffer);
+  return data;
+}

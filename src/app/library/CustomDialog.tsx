@@ -8,9 +8,10 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import { BookType } from "../lib/definitions";
-import Image from "next/image";
 import { Suspense } from "react";
+import Grid from "@mui/material/Unstable_Grid2";
 import { BookImageSkeleton } from "../ui/skeletons";
+import CustomImage from "../ui/library/CustomImage";
 
 // TO-DO
 // - UI of component
@@ -26,10 +27,12 @@ export default function CustomDialog({
   open,
   handleClose,
   book,
+  blurData,
 }: {
   open: boolean;
   handleClose: { (): any };
   book: BookType;
+  blurData: string;
 }) {
   const url =
     "https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/" +
@@ -45,6 +48,7 @@ export default function CustomDialog({
         sx={{
           m: 0,
           p: 2,
+          pr: 8,
           backgroundColor: (theme) => theme.palette.background.default,
         }}
         id="customized-dialog-title"
@@ -69,13 +73,19 @@ export default function CustomDialog({
       >
         <CloseIcon />
       </IconButton>
-      <DialogContent dividers>
-        <Typography gutterBottom>{book.author}</Typography>
-        <Typography gutterBottom>{book.pages}</Typography>
-        <Typography gutterBottom>{book.availability}</Typography>
-        <Suspense fallback={<p>Loading...</p>}>
-          <Image src={url} width={200} height={200} alt={book.title} />
-        </Suspense>
+      <DialogContent dividers style={{ minWidth: 400 }}>
+        <Grid container>
+          <Grid xs={6} md={6}>
+            {/* <Suspense fallback={<p>Loading...</p>}> */}
+            <CustomImage url={url} alt={book.title} base64={blurData} />
+            {/* </Suspense> */}
+          </Grid>
+          <Grid xs={6} md={6}>
+            <Typography gutterBottom>{book.author}</Typography>
+            <Typography gutterBottom>{book.pages}</Typography>
+            <Typography gutterBottom>{book.availability}</Typography>
+          </Grid>
+        </Grid>
       </DialogContent>
     </BootstrapDialog>
   );

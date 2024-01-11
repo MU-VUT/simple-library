@@ -8,7 +8,13 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import CustomDialog from "./CustomDialog";
 import { BookType } from "../lib/definitions";
 
-export default function Book({ book }: { book: BookType }) {
+export default function Book({
+  book,
+  blurData,
+}: {
+  book: BookType;
+  blurData: string;
+}) {
   const [open, setOpen] = React.useState(false);
 
   const checkAvailability = (availability: number) => {
@@ -42,7 +48,12 @@ export default function Book({ book }: { book: BookType }) {
           {checkAvailability(book.availability)} {book.availability}x
         </Grid>
       </StyledGrid>
-      <CustomDialog open={open} handleClose={handleClose} book={book} />
+      <CustomDialog
+        open={open}
+        handleClose={handleClose}
+        book={book}
+        blurData={blurData}
+      />
     </React.Fragment>
   );
 }

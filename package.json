@@ -15,10 +15,13 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.16",
     "@mui/material": "^5.14.16",
+    "@plaiceholder/next": "^3.0.0",
     "graphql": "^16.8.1",
     "next": "14.0.1",
+    "plaiceholder": "^3.0.0",
     "react": "^18",
     "react-dom": "^18",
+    "sharp": "^0.33.1",
     "use-debounce": "^3.4.3"
   },
   "devDependencies": {
