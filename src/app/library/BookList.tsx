@@ -24,8 +24,6 @@ export default async function BookList({
     })
   );
 
-  console.log(blurDataArr);
-
   return (
     <div>
       {pagedBooks[currentPage - 1]?.map((book: BookType, index) => (
