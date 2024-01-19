@@ -1,4 +1,4 @@
-export default function Page() {
+export default function AdminPanelPage() {
   return (
     <div>
       <h1>Admin panel</h1>

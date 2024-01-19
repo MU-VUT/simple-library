@@ -12,27 +12,15 @@ import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import Tooltip from "@mui/material/Tooltip";
-import { AccountCircle } from "@mui/icons-material";
-import MuiLink from "@mui/material/Link";
+import NavAdmin from "@/components/NavAdmin";
 
 const LINKS = [
   { text: "Home", href: "/" },
   { text: "Seznam knih", href: "/library" },
 ];
 
-const SETTINGS = [
-  { text: "Admin panel", href: "/admin-panel" },
-  { text: "Výpůjčka/vrácení knihy", href: "/admin-panel/borrow" },
-  { text: "Editace knihovny", href: "/admin-panel/edit-library" },
-];
-
-export default function NavBar() {
+export default function NavBar({ sessionActive }: { sessionActive: boolean }) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
 
@@ -42,14 +30,6 @@ export default function NavBar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   return (
@@ -123,49 +103,7 @@ export default function NavBar() {
               </Button>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open admin panel">
-              <IconButton
-                size="large"
-                aria-label="account of admin"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenUserMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {SETTINGS.map((setting) => (
-                <MenuItem key={setting.text} onClick={handleCloseUserMenu}>
-                  <MuiLink
-                    href={setting.href}
-                    variant="button"
-                    underline="none"
-                    sx={{ width: "100%" }}
-                  >
-                    {setting.text}
-                  </MuiLink>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          <NavAdmin sessionActive={sessionActive} />
         </Toolbar>
       </Container>
     </AppBar>
