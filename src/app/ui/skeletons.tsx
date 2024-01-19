@@ -24,15 +24,3 @@ export function BookListSkeleton() {
     </div>
   );
 }
-
-export function BookImageSkeleton() {
-  return (
-    <StyledGrid
-      container
-      sx={{
-        height: 200,
-        width: 200,
-      }}
-    />
-  );
-}

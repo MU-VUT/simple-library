@@ -17,10 +17,6 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 import * as isoFunc from "iso-3166-1-alpha-2";
 
-// TO-DO
-// - UI of component
-// - Skeletons for loading - Suspense not working!!!
-
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
