@@ -11,15 +11,17 @@ export default async function BookList({
   currentPage: number;
 }) {
   const pagedBooks: BookType[][] = await fetchFilteredBooks(query);
-  var blurDataArr: string[] = await Promise.all(
-    pagedBooks[currentPage - 1]?.map(async (book: BookType) => {
-      const imageUrl =
-        "https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/" +
-        book.imageLink;
-      const { base64 } = await getBlurData(imageUrl);
-      return base64;
-    })
-  );
+  if (pagedBooks.length !== 0) {
+    var blurDataArr: string[] = await Promise.all(
+      pagedBooks[currentPage - 1].map(async (book: BookType) => {
+        const imageUrl =
+          "https://raw.githubusercontent.com/benoitvallon/100-best-books/master/static/" +
+          book.imageLink;
+        const { base64 } = await getBlurData(imageUrl);
+        return base64;
+      })
+    );
+  }
 
   return (
     <div>

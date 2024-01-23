@@ -24,7 +24,7 @@ export default function CustomAlert({
       }, 3000);
     }
   };
-  useEffect(onLoadEffect, []);
+  useEffect(onLoadEffect, [searchParams]);
 
   return (
     <Collapse
