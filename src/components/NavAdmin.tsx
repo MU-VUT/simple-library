@@ -87,8 +87,12 @@ export default function NavAdmin({
             </MenuItem>
             <MenuItem>
               <span
+                style={{ width: "100%" }}
                 onClick={() => {
-                  signOut();
+                  signOut({
+                    callbackUrl:
+                      "http://localhost:3000/login?session=logout-success",
+                  });
                 }}
               >
                 Logout
