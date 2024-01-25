@@ -2,6 +2,7 @@ import * as React from "react";
 import { fetchFilteredBooks, getBlurData } from "./utils";
 import { BookType } from "../lib/definitions";
 import Book from "./Book";
+import { getServerSession } from "next-auth";
 
 export default async function BookList({
   query,
@@ -10,6 +11,8 @@ export default async function BookList({
   query: string;
   currentPage: number;
 }) {
+  const session = await getServerSession();
+  const adminBool = session ? true : false;
   const pagedBooks: BookType[][] = await fetchFilteredBooks(query);
   if (pagedBooks.length !== 0) {
     var blurDataArr: string[] = await Promise.all(
@@ -26,7 +29,12 @@ export default async function BookList({
   return (
     <div>
       {pagedBooks[currentPage - 1]?.map((book: BookType, index) => (
-        <Book key={book.title} book={book} blurData={blurDataArr[index]} />
+        <Book
+          key={book.title}
+          book={book}
+          blurData={blurDataArr[index]}
+          isAdmin={adminBool}
+        />
       ))}
     </div>
   );

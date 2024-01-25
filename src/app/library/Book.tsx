@@ -11,9 +11,11 @@ import { BookType } from "../lib/definitions";
 export default function Book({
   book,
   blurData,
+  isAdmin,
 }: {
   book: BookType;
   blurData: string;
+  isAdmin: boolean;
 }) {
   const [open, setOpen] = React.useState(false);
 
@@ -53,6 +55,7 @@ export default function Book({
         handleClose={handleClose}
         book={book}
         blurData={blurData}
+        isAdmin={isAdmin}
       />
     </React.Fragment>
   );

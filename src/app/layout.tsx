@@ -3,7 +3,6 @@ import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { getServerSession } from "next-auth";
-import Logout from "./admin-panel/logout";
 
 const inter = Inter({ subsets: ["latin"] });
 

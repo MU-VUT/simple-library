@@ -37,8 +37,7 @@ export default function Form() {
       >
         <Alert severity="error">{errors}</Alert>
       </Collapse>
-
-      <Box mt={15} display="flex" justifyContent="center">
+      <Box mt={5} display="flex" justifyContent="center">
         <form onSubmit={handleSubmit}>
           <FormControl>
             <TextField name="email" label="Email" variant="filled"></TextField>

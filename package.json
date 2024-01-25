@@ -7,13 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "server": "json-server --watch _data/books.json --port 4000"
+    "server": "json-server --watch _data/books.json --port 4000 --id title"
   },
   "dependencies": {
     "@apollo/client": "^3.8.6",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.16",
+    "@mui/lab": "^5.0.0-alpha.162",
     "@mui/material": "^5.14.16",
     "@plaiceholder/next": "^3.0.0",
     "@types/country-flag-icons": "^1.2.2",

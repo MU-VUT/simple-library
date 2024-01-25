@@ -1,21 +1,24 @@
-"use client";
-
 import { styled } from "@mui/material/styles";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import IconButton from "@mui/material/IconButton";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  IconButton,
+  Typography,
+  Box,
+  Button,
+  Stack,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
 import { BookType } from "../lib/definitions";
 import Grid from "@mui/material/Unstable_Grid2";
 import Image from "next/image";
 import CustomImage from "../ui/library/CustomImage";
-import Box from "@mui/material/Box";
-import { Button, Stack } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 import * as isoFunc from "iso-3166-1-alpha-2";
+import { usePathname } from "next/navigation";
+import Borrow from "./Borrow";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -28,12 +31,18 @@ export default function CustomDialog({
   handleClose,
   book,
   blurData,
+  isAdmin,
 }: {
   open: boolean;
   handleClose: { (): any };
   book: BookType;
   blurData: string;
+  isAdmin: boolean;
 }) {
+  const pathname = usePathname();
+
+  const showAdmin = isAdmin && pathname == "/admin-panel/borrow" ? true : false;
+
   const checkAvailability = (availability: number) => {
     if (availability > 0) {
       return <CheckCircleOutlineIcon style={{ fill: "green", fontSize: 20 }} />;
@@ -153,6 +162,7 @@ export default function CustomDialog({
             >
               Více info
             </Button>
+            {showAdmin && <Borrow book={book} />}
           </Grid>
         </Grid>
       </DialogContent>

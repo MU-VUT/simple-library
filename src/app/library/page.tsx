@@ -1,5 +1,5 @@
 import SearchBar from "@/app/ui/library/SearchBar";
-import React, { Suspense, useState } from "react";
+import React, { Suspense } from "react";
 import Container from "@mui/material/Container";
 import CustomPagination from "../ui/library/CustomPagination";
 import { fetchBooksPages, fetchTotalBooks } from "./utils";
