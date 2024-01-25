@@ -14,7 +14,7 @@
       "pages": 209,
       "title": "Things Fall Apart",
       "year": 1958,
-      "availability": 1
+      "availability": 2
     },
     {
       "author": "Hans Christian Andersen",
@@ -25,7 +25,7 @@
       "pages": 784,
       "title": "Fairy tales",
       "year": 1836,
-      "availability": 2
+      "availability": 6
     },
     {
       "author": "Dante Alighieri",
@@ -36,7 +36,7 @@
       "pages": 928,
       "title": "The Divine Comedy",
       "year": 1315,
-      "availability": 0
+      "availability": 1
     },
     {
       "author": "Unknown",

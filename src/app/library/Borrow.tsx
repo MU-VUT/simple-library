@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup } from "@mui/material";
+import { Box, Button, ButtonGroup, Tooltip } from "@mui/material";
 import { BookType } from "../lib/definitions";
 import fetchBorrowHanlder from "../api/postHandler";
 import { useRouter } from "next/navigation";
@@ -14,17 +14,42 @@ export default function Borrow({ book }: { book: BookType }) {
     router.refresh();
   }
 
-  return (
-    <Box mt={2}>
-      <ButtonGroup color="secondary" variant="contained">
+  const BorrowButton = ({ availability }: { availability: number }) => {
+    if (availability == 0) {
+      return (
+        <Tooltip placement="top" arrow title="Kniha již není dostupná">
+          <span>
+            <Button
+              color="success"
+              onClick={() => {
+                handleClick(true, book);
+              }}
+              disabled
+            >
+              Výpujčka
+            </Button>
+          </span>
+        </Tooltip>
+      );
+    } else {
+      return (
         <Button
           color="success"
           onClick={() => {
             handleClick(true, book);
           }}
+          disabled={book.availability == 0}
         >
-          Výpujčka
+          Výpůjčka
         </Button>
+      );
+    }
+  };
+
+  return (
+    <Box mt={2}>
+      <ButtonGroup color="secondary" variant="contained">
+        <BorrowButton availability={book.availability} />
         <Button
           color="error"
           onClick={() => {
